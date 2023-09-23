@@ -2,8 +2,8 @@ package app
 
 import app.common.Configuration
 import app.db.{Db, DbMigrator}
-import io.helidon.webserver.WebServer
-import sttp.tapir.server.nima.NimaServerInterpreter
+import sttp.tapir.*
+import sttp.tapir.server.netty.loom.NettyIdServer
 
 object Main extends App {
   val config = Configuration.load()
@@ -11,14 +11,8 @@ object Main extends App {
   val dbMigrator = new DbMigrator(Db.pgDataSource)
   dbMigrator.migrate()
 
-  val handlers = NimaServerInterpreter().toHandler(Endpoints.all)
-
   // Create and start the Nima server
-  val server = WebServer.builder()
-    .routing(builder => builder.any(handlers))
-    .port(8080)
-    .build()
-    .start()
+  val server = NettyIdServer().addEndpoints(Endpoints.all).port(8080).start()
 
-  println(s"WEB server is up at http://localhost:${server.port()}")
+  println(s"WEB server is up at http://localhost:${server.port}")
 }

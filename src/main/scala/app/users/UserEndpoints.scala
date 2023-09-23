@@ -5,7 +5,7 @@ import sttp.tapir.*
 import sttp.tapir.generic.auto.*
 import sttp.tapir.json.circe.jsonBody
 import sttp.tapir.server.ServerEndpoint
-import sttp.tapir.server.nima.Id
+import sttp.tapir.server.netty.loom.Id
 
 object UserEndpoints:
   val register: PublicEndpoint[UserRegisterData, Unit, UserResponse, Any] = endpoint.post
