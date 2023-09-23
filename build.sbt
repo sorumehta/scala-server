@@ -1,5 +1,5 @@
 
-lazy val rootProject = (project in file(".")).settings(
+lazy val rootProject = (project in file(".")).enablePlugins(SbtTwirl).settings(
   Seq(
     name := "tapir-loom-server",
     version := "0.1.0-SNAPSHOT",
@@ -12,6 +12,9 @@ lazy val rootProject = (project in file(".")).settings(
       "com.softwaremill.sttp.tapir" %% "tapir-netty-server-id" % "0.2.4",
       "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.7.3",
       "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.7.3",
+
+      // frontend
+
 
       // security
       "com.password4j" % "password4j" % "1.7.3",
