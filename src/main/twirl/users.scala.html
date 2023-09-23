@@ -1,0 +1,14 @@
+@import app.users.User
+@import html.root
+
+@(users: List[User])
+
+@root {
+    <h1>List of Users</h1>
+    <div>
+        @for(user <- users) {
+            @user_details(user)
+        }
+        <br />
+    </div>
+}

@@ -1,0 +1,16 @@
+@import app.users.User
+
+@(user: User)
+
+
+<div hx-target="this" hx-swap="outerHTML">
+    <div><label>Username</label>: @user.username</div>
+    <div><label>Bio</label>: @user.bio</div>
+    <div><label>Email</label>: @user.email.value</div>
+    <button hx-get=@{
+        s"/users/${user.username}/edit"
+    } class="btn btn-primary">
+    Click To Edit
+    </button>
+</div>
+

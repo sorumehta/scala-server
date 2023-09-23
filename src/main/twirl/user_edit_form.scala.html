@@ -1,0 +1,23 @@
+@import app.users.User
+@import html.root
+
+@(user: User)
+
+@root {
+    <form hx-put=@{s"/users/${user.username}/edit"} hx-target="this" hx-swap="outerHTML">
+        <div>
+            <label>Username</label>
+            <input type="text" name="username" value=@user.username>
+        </div>
+        <div class="form-group">
+            <label>Bio</label>
+            <input type="text" name="bio" value=@user.bio>
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" value=@user.email.value>
+        </div>
+        <button class="btn">Submit</button>
+        <button class="btn" hx-get=@{s"/users/${user.username}"}>Cancel</button>
+    </form>
+}
