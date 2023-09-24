@@ -29,7 +29,6 @@ class UserService(repository: UserRepository) {
 
   def update(updateData: UserUpdateData, username: String): Either[Error, User] = {
     val emailCleanOpt = updateData.email.map(email => email.toLowerCase.trim())
-    val usernameCleanOpt = updateData.username.map(username => username.trim())
     val oldUserOption = repository.findByUsername(username)
 
     oldUserOption match {

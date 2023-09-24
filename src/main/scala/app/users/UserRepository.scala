@@ -49,7 +49,6 @@ class UserRepository {
       .filter(_.username == lift(username))
       .update(
         setOpt[UserRow, String](_.email, updateData.email),
-        setOpt[UserRow, String](_.username, updateData.username),
         setOpt[UserRow, String](_.password, updateData.password),
         setOpt[UserRow, String](_.bio.orNull, updateData.bio),
         setOpt[UserRow, String](_.image.orNull, updateData.image)
