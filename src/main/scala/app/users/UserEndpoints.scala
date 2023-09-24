@@ -55,11 +55,24 @@ object UserEndpoints:
     .in("users" / path[String]("username"))
     .out(stringBody)
     .out(header("Content-Type", "text/html"))
-  val getUserByUsernameServerEndpoint: ServerEndpoint[Any, Id] = getEditUserEndpoint.serverLogicSuccess { username =>
+  val getUserByUsernameServerEndpoint: ServerEndpoint[Any, Id] = getUserByUsernameEndpoint.serverLogicSuccess { username =>
     val userService = new UserService(new UserRepository()) // Initialize service and repository
     val foundUser = userService.findByUsername(username)
     foundUser match {
       case Some(user) => html.user_details(user).toString()
+      case None => html.not_found().toString()
+    }
+  }
+
+  val getUserPartialEndpoint: PublicEndpoint[String, Unit, String, Any] = endpoint.get
+    .in("users" / path[String]("username") / "partial")
+    .out(stringBody)
+    .out(header("Content-Type", "text/html"))
+  val getUserPartialServerEndpoint: ServerEndpoint[Any, Id] = getUserPartialEndpoint.serverLogicSuccess { username =>
+    val userService = new UserService(new UserRepository()) // Initialize service and repository
+    val foundUser = userService.findByUsername(username)
+    foundUser match {
+      case Some(user) => html.user_partial(user).toString()
       case None => html.not_found().toString()
     }
   }
@@ -73,10 +86,11 @@ object UserEndpoints:
     val userService = new UserService(new UserRepository()) // Initialize service and repository
     val foundUser = userService.update(updateData, username)
     foundUser match {
-      case Right(user) => html.user_details(user).toString()
+      case Right(user) => html.user_partial(user).toString()
       case Left(UserNotFoundError(_)) => html.not_found().toString()
     }
   }
 
 
-  val all = List(registerEndpoint, findByEmailEndpoint) ++ List(indexServerEndpoint, getEditUserServerEndpoint, putEditUserServerEndpoint)
+  val all = List(registerEndpoint, findByEmailEndpoint) ++ List(indexServerEndpoint, getEditUserServerEndpoint,
+    getUserByUsernameServerEndpoint, putEditUserServerEndpoint, getUserPartialServerEndpoint)

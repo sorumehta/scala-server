@@ -1,0 +1,14 @@
+@import app.users.User
+
+@(user: User)
+
+<div class="text-xl mt-6" hx-target="this" hx-swap="outerHTML">
+  <div><label class=" text-indigo-500">Username</label>: @user.username</div>
+  <div><label class=" text-indigo-500">Bio</label>: @user.bio</div>
+  <div><label class=" text-indigo-500">Email</label>: @user.email.value</div>
+  <button class="mt-6 px-5 py-3 inline-block rounded-lg bg-indigo-500 text-white shadow-lg font-semibold text-sm"
+  hx-get=@{s"/users/${user.username}/edit"}
+  >
+                Click To Edit
+  </button>
+</div>

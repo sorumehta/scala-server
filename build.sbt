@@ -10,6 +10,7 @@ lazy val rootProject = (project in file(".")).enablePlugins(SbtTwirl).settings(
     libraryDependencies ++= Seq(
       // tapir and server
       "com.softwaremill.sttp.tapir" %% "tapir-netty-server-id" % "0.2.4",
+      "com.softwaremill.sttp.tapir" %% "tapir-files" % "1.7.4",
       "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.7.3",
       "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.7.3",
 

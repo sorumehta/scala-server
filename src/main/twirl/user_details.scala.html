@@ -1,16 +1,18 @@
 @import app.users.User
-
+@import html.root
+@import html.user_partial
 @(user: User)
 
 
-<div hx-target="this" hx-swap="outerHTML">
-    <div><label>Username</label>: @user.username</div>
-    <div><label>Bio</label>: @user.bio</div>
-    <div><label>Email</label>: @user.email.value</div>
-    <button hx-get=@{
-        s"/users/${user.username}/edit"
-    } class="btn btn-primary">
-    Click To Edit
-    </button>
-</div>
+@root {
+    <div class="grid md:grid-cols-2 justify-center items-center">
+        <div class="p-8 max-w-md mx-auto">
+            <img class="mt-6 rounded-lg shadow-xl" src="/images/beach-work.jpg" alt="Women">
+        </div>
+        <div>
+          @user_partial(user)
+        </div>
+    </div>
+  <a href="/users/all">Back to Users</a>
+}
 
