@@ -14,6 +14,8 @@ lazy val rootProject = (project in file(".")).enablePlugins(SbtTwirl).settings(
       "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.7.3",
       "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.7.3",
 
+      "com.typesafe.play" %% "twirl-api" % "1.6.1",
+
       // security
       "com.password4j" % "password4j" % "1.7.3",
       "com.auth0" % "java-jwt" % "4.4.0",

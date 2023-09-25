@@ -9,7 +9,8 @@ import io.circe.{Decoder, Encoder}
 case class UserRegisterData(
                              @validate(Validator.nonEmptyString) email: String,
                              @validate(Validator.minLength(3)) username: String,
-                             @validate(Validator.nonEmptyString) password: String
+                             @validate(Validator.nonEmptyString) password: String,
+                             @validate(Validator.nonEmptyString) bio: Option[String]
                            )
 
 

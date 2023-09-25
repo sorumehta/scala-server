@@ -1,0 +1,12 @@
+@import app.users.User
+
+
+@(users: List[User])
+
+<div hx-get="/users/all/list" hx-trigger="newUser from:body">
+    <ul class="text-indigo-500 p-10">
+    @for(user <- users) {
+        <li><a href=@{s"/users/${user.username}"} > @{user.username} </a> </li>
+    }
+    </ul>
+</div>

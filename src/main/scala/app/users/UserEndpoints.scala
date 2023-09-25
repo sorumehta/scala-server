@@ -8,13 +8,16 @@ import sttp.tapir.server.ServerEndpoint
 import sttp.tapir.server.netty.loom.Id
 
 object UserEndpoints:
-  val register: PublicEndpoint[UserRegisterData, Unit, UserResponse, Any] = endpoint.post
-    .in("api" / "users")
-    .in(jsonBody[UserRegisterData])
-    .out(jsonBody[UserResponse])
+  val register: PublicEndpoint[UserRegisterData, Unit, String, Any] = endpoint.post
+    .in("new" / "user")
+    .in(formBody[UserRegisterData])
+    .out(stringBody)
+    .out(header("Content-Type", "text/html"))
+    .out(header("HX-Trigger","newUser"))
   val registerEndpoint: ServerEndpoint[Any, Id] = register.serverLogicSuccess(user => {
     val userService = new UserService(new UserRepository()) // Initialize service and repository
     userService.register(user)
+    html.new_user_button().toString()
   })
 
   // Endpoint to find a user by email
@@ -36,6 +39,25 @@ object UserEndpoints:
     val userService = new UserService(new UserRepository())
     val renderedHtml = html.users(userService.getAllUsers()).toString()
     renderedHtml
+  }
+
+  val userListEndpoint: PublicEndpoint[Unit, Unit, String, Any] = endpoint.get
+    .in("users" / "all" / "list")
+    .out(stringBody)
+    .out(header("Content-Type", "text/html"))
+  val userListServerEndpoint: ServerEndpoint[Any, Id] = userListEndpoint.serverLogicSuccess { _ =>
+    val userService = new UserService(new UserRepository())
+    val renderedHtml = html.users_list(userService.getAllUsers()).toString()
+    renderedHtml
+  }
+
+  val getNewUserEndpoint: PublicEndpoint[Unit, Unit, String, Any] = endpoint.get
+    .in("users" / "new" / "user")
+    .out(stringBody)
+    .out(header("Content-Type", "text/html"))
+  val getNewUserServerEndpoint: ServerEndpoint[Any, Id] = getNewUserEndpoint.serverLogicSuccess { _ =>
+    html.new_user_form().toString()
+
   }
 
   val getEditUserEndpoint: PublicEndpoint[String, Unit, String, Any] = endpoint.get
@@ -92,5 +114,5 @@ object UserEndpoints:
   }
 
 
-  val all = List(registerEndpoint, findByEmailEndpoint) ++ List(indexServerEndpoint, getEditUserServerEndpoint,
-    getUserByUsernameServerEndpoint, putEditUserServerEndpoint, getUserPartialServerEndpoint)
+  val all = List(registerEndpoint, findByEmailEndpoint) ++ List(indexServerEndpoint, getEditUserServerEndpoint, userListServerEndpoint,
+    getUserByUsernameServerEndpoint, putEditUserServerEndpoint, getUserPartialServerEndpoint, getNewUserServerEndpoint)

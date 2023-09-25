@@ -23,7 +23,7 @@ class UserService(repository: UserRepository) {
 
   def register(user: UserRegisterData): UserResponse = {
     repository.insert(user)
-    val createdUser = User(Email(user.email), user.password, user.username, bio = None, image = None)
+    val createdUser = User(Email(user.email), user.password, user.username, bio = user.bio, image = None)
     UserResponse(createdUser)
   }
 

@@ -1,23 +1,21 @@
 @import app.users.User
-@import html.root
 
 @(user: User)
 
-@root {
-    <form class="text-xl mt-6" hx-put=@{s"/users/${user.username}/edit"} hx-target="this" hx-swap="outerHTML">
-        <div >
-            <label class=" text-indigo-500">Username</label>
-            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" readonly name="username" value=@user.username>
-        </div>
-        <div class="form-group">
-            <label class=" text-indigo-500">Bio</label>
-            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="bio" value=@user.bio>
-        </div>
-        <div class="form-group">
-            <label class=" text-indigo-500">Email Address</label>
-            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="email" name="email" value=@user.email.value>
-        </div>
-        <button class="mt-6 px-5 py-3 inline-block rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg font-semibold text-sm">Submit</button>
-        <button class="mt-6 px-5 py-3 inline-block rounded-lg bg-gray-700 hover:bg-gray-500 text-white shadow-lg font-semibold text-sm" hx-get=@{s"/users/${user.username}/partial"}>Cancel</button>
-    </form>
-}
+
+<form class="text-xl mt-6" hx-put=@{s"/users/${user.username}/edit"} hx-target="this" hx-swap="outerHTML">
+    <div >
+        <label class=" text-indigo-500">Username</label>
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" readonly name="username" value=@user.username>
+    </div>
+    <div class="form-group">
+        <label class=" text-indigo-500">Bio</label>
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="bio" value=@user.bio>
+    </div>
+    <div class="form-group">
+        <label class=" text-indigo-500">Email Address</label>
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="email" name="email" value=@user.email.value>
+    </div>
+    <button class="mt-6 px-5 py-3 inline-block rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg font-semibold text-sm">Submit</button>
+    <button class="mt-6 px-5 py-3 inline-block rounded-lg bg-gray-700 hover:bg-gray-500 text-white shadow-lg font-semibold text-sm" hx-get=@{s"/users/${user.username}/partial"}>Cancel</button>
+</form>

@@ -40,7 +40,7 @@ class UserRepository {
   }
 
   def insert(user: UserRegisterData): Unit = {
-    run(queryUser.insert(_.email -> lift(user.email), _.username -> lift(user.username), _.password -> lift(user.password)))
+    run(queryUser.insert(_.email -> lift(user.email), _.username -> lift(user.username), _.password -> lift(user.password), _.bio -> lift(user.bio)))
   }
 
   def updateByUsername(updateData: UserUpdateData, username: String): User = {
@@ -49,7 +49,6 @@ class UserRepository {
       .filter(_.username == lift(username))
       .update(
         setOpt[UserRow, String](_.email, updateData.email),
-        setOpt[UserRow, String](_.password, updateData.password),
         setOpt[UserRow, String](_.bio.orNull, updateData.bio),
         setOpt[UserRow, String](_.image.orNull, updateData.image)
       )

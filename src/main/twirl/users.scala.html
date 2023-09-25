@@ -1,16 +1,13 @@
 @import app.users.User
 @import html.root
-
+@import html.users_list
+@import html.new_user_button
 @(users: List[User])
 
 @root {
-    <h1 class="font-bold text-2xl">List of Users</h1>
-    <div>
-        <ul class="text-indigo-500 p-10">
-        @for(user <- users) {
-            <li><a href=@{s"/users/${user.username}"} > @{user.username} </a> </li>
-        }
-        </ul>
+    <h1 class="font-bold text-2xl">Welcome to my demo app</h1>
+    @users_list(users)
 
-    </div>
+    @new_user_button()
+
 }
