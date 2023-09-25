@@ -40,4 +40,16 @@ class UserService(repository: UserRepository) {
         Left(UserNotFoundError(username))
     }
   }
+  
+  def delete(username: String): Either[Error, Long] = {
+    val userExistsOption = repository.findByUsername(username)
+    userExistsOption match {
+      case Some(user) =>
+        Right(repository.delete(username))
+      case None =>
+        Left(UserNotFoundError(username))
+    }
+  }
+  
+  
 }

@@ -15,9 +15,17 @@ object UserEndpoints:
     .out(header("Content-Type", "text/html"))
     .out(header("HX-Trigger","newUser"))
   val registerEndpoint: ServerEndpoint[Any, Id] = register.serverLogicSuccess(user => {
-    val userService = new UserService(new UserRepository()) // Initialize service and repository
+    val userService = new UserService(new UserRepository())
     userService.register(user)
     html.new_user_button().toString()
+  })
+
+  val deleteUserEndpoint: PublicEndpoint[String, Unit, Unit, Any] = endpoint.delete
+    .in("remove" / "user" / path[String]("username"))
+  val deleteUserServerEndpoint: ServerEndpoint[Any, Id] = deleteUserEndpoint.serverLogicSuccess(username => {
+    val userService = new UserService(new UserRepository())
+    userService.delete(username)
+    () // return nothing
   })
 
   // Endpoint to find a user by email
@@ -115,4 +123,4 @@ object UserEndpoints:
 
 
   val all = List(registerEndpoint, findByEmailEndpoint) ++ List(indexServerEndpoint, getEditUserServerEndpoint, userListServerEndpoint,
-    getUserByUsernameServerEndpoint, putEditUserServerEndpoint, getUserPartialServerEndpoint, getNewUserServerEndpoint)
+    getUserByUsernameServerEndpoint, putEditUserServerEndpoint, getUserPartialServerEndpoint, getNewUserServerEndpoint, deleteUserServerEndpoint)

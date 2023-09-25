@@ -3,10 +3,17 @@
 
 @(users: List[User])
 
-<div hx-get="/users/all/list" hx-trigger="newUser from:body">
-    <ul class="text-indigo-500 p-10">
+<div class="grid grid-cols-1 gap-3 m-5 auto-cols-min max-w-xs" hx-get="/users/all/list" hx-trigger="newUser from:body">
+
     @for(user <- users) {
-        <li><a href=@{s"/users/${user.username}"} > @{user.username} </a> </li>
+      <div  hx-confirm="Are you sure?" hx-target="closest div" hx-swap="outerHTML swap:1s">
+        <a class="p-5 text-indigo-500" href=@{s"/users/${user.username}"} > @{user.username} </a>
+        <button class="px-1 py-0.5  rounded-md bg-gray-200 hover:bg-red-400 text-gray-700
+            text-sm transition fade-me-out"
+        hx-delete=@{s"/remove/user/${user.username}"}>
+           Delete
+        </button>
+      </div>
     }
-    </ul>
+
 </div>

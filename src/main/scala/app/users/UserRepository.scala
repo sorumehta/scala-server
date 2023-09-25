@@ -61,6 +61,10 @@ class UserRepository {
     run(update)
     val user = run(read).head
     userRowToUser(user)
-
   }
+
+  def delete(username: String): Long = {
+    run(queryUser.filter(_.username == lift(username)).delete)
+  }
+  
 }

@@ -6,8 +6,14 @@
         <title>HTMX: Click to edit</title>
         <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
         <script src="https://unpkg.com/htmx.org@@1.9.4?plugins=forms" type="text/javascript"></script>
+        <style>
+                .fade-me-out.htmx-swapping {
+                    opacity: 0;
+                    transition: opacity 1s ease-out;
+                }
+        </style>
     </head>
-    <body>         
+    <body class="m-5">
             @content
     </body>
 </html>
