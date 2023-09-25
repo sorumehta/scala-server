@@ -1,16 +1,16 @@
 package app.users
 
 
-import sttp.tapir.Schema.annotations.validate
+import sttp.tapir.Schema.annotations.{validate, validateEach}
 import sttp.tapir.Validator
-import io.circe.generic.semiauto.{deriveEncoder, deriveDecoder}
+import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.{Decoder, Encoder}
 
 case class UserRegisterData(
                              @validate(Validator.nonEmptyString) email: String,
                              @validate(Validator.minLength(3)) username: String,
                              @validate(Validator.nonEmptyString) password: String,
-                             @validate(Validator.nonEmptyString) bio: Option[String]
+                             @validateEach(Validator.nonEmptyString) bio: Option[String]
                            )
 
 
